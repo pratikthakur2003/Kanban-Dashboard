@@ -15,7 +15,7 @@
       <!-- Main Section -->
       <main>
         <div class="nav">
-          <h1>KANBAN DASHBOARD</h1>
+          <h1 class="recipe-name">KANBAN DASHBOARD</h1>
           <span class="material-icons-sharp" id="menuButton"> menu </span>
         </div>
         <div class="step-section">
@@ -25,29 +25,7 @@
               <span class="material-icons-sharp" id="to-do-arrow"> arrow_drop_down </span>
             </div>
             <div class="to-do-steps steps">
-              <div class="step-lists" id="step-lists">
-                <input type="checkbox" id="step-checkbox" />
-                <h3 class="dynamic-heading">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                </h3>
-              </div>
-              <div class="step-lists" id="step-lists">
-                <input type="checkbox" id="step-checkbox" />
-                <h3 class="dynamic-heading">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                </h3>
-              </div>
-              <div class="step-lists" id="step-lists">
-                <input type="checkbox" id="step-checkbox" />
-                <h3 class="dynamic-heading">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                </h3>
-              </div>
+              
             </div>
           </div>
           <div class="in-progress step-container" id="in-progress">
@@ -56,13 +34,7 @@
               <span class="material-icons-sharp" id="in-progress-arrow"> arrow_drop_down </span>
             </div>
             <div class="in-progress-steps steps">
-              <div class="step-lists" id="step-lists">
-                <input type="checkbox" id="step-checkbox" />
-                <h3 class="dynamic-heading">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                </h3>
-              </div>
+              
             </div>
           </div>
           <div class="completed step-container" id="completed">
@@ -71,25 +43,44 @@
               <span class="material-icons-sharp" id="completed-arrow"> arrow_drop_down </span>
             </div>
             <div class="completed-steps steps">
-              <div class="step-lists" id="step-lists">
-                <input type="checkbox" id="step-checkbox" />
-                <h3 class="dynamic-heading">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                </h3>
-              </div>
-              <div class="step-lists" id="step-lists">
-                <input type="checkbox" id="step-checkbox" />
-                <h3 class="dynamic-heading">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
-                  provident?
-                </h3>
-              </div>
+              
             </div>
           </div>
         </div>
       </main>
       <!-- End of Main Section -->
+
+      <!-- Template Section -->
+      <template class="template-to-do" id="template-to-do">
+        <div class="step-lists" id="step-lists">
+          <input type="checkbox" id="step-checkbox" class="to-do-checkbox" />
+          <h3 class="dynamic-heading">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
+            provident?
+          </h3>
+        </div>
+      </template>
+
+      <template class="template-in-progress" id="template-in-progress">
+        <div class="step-lists" id="step-lists">
+          <input type="checkbox" id="step-checkbox" class="in-progress-checkbox" />
+          <h3 class="dynamic-heading">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
+            provident?
+          </h3>
+        </div>
+      </template>
+
+      <template class="template-completed" id="template-completed">
+        <div class="step-lists" id="step-lists">
+          <input type="checkbox" id="step-checkbox" class="completed-checkbox" />
+          <h3 class="dynamic-heading">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo,
+            provident?
+          </h3>
+        </div>
+      </template>
+      <!-- End of Template Section -->
 
       <!-- Utility Section -->
       <aside>
@@ -124,7 +115,7 @@
               <span class="material-icons-sharp"> summarize </span>
               <h2>Summary</h2>
             </a>
-            <a href="#" class="utility-options" id="servings">
+            <a class="utility-options" id="servings">
               <span class="material-icons-sharp"> local_dining </span>
               <h2>Servings</h2>
             </a>
@@ -155,40 +146,30 @@
           <table>
             <tr>
               <th><h2>Recipe Name</h2></th>
-              <td id="recipe-name">Samosa</td>
+              <td id="recipe-name"></td>
             </tr>
             <tr>
               <th><h2>Recipe Type</h2></th>
-              <td id="recipe-type">Indian Snack</td>
+              <td id="recipe-type">-</td>
             </tr>
-            <tr>
-              <th><h2>Ingredients</h2></th>
-              <td id="recipe-ingredients">
-                <ol>
-                  Potato
-                </ol>
-                <ol>
-                  Maida
-                </ol>
-                <ol>
-                  Onions
-                </ol>
-                <ol>
-                  Peas
-                </ol>
-                <ol>
-                  Potato
-                </ol>
-              </td>
-            </tr>
+            
             <tr>
               <th><h2>Time</h2></th>
-              <td id="recipe-time">Approx. 30 mins</td>
+              <td id="recipe-time"></td>
             </tr>
             <tr>
-              <th><h2>Review</h2></th>
-              <td id="recipe-review">4.5 / 5</td>
+              <th><h2>Servings</h2></th>
+              <td id="recipe-serve"></td>
             </tr>
+            <tr>
+              <th><h2>Price(per servings)</h2></th>
+              <td id="recipe-price"></td>
+            </tr>
+            <tr>
+              <th><h2>Description</h2></th>
+              <td id="recipe-description"></td>
+            </tr>
+
           </table>
         </div>
       </div>

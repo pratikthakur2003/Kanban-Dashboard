@@ -75,6 +75,106 @@ function handleResize() {
 
 handleResize();
 
+// API Calls
+
+const API_KEY = "813e516c27d74126839ef7c0cba66482";
+const query = "paneer";
+let toDoList = [];
+let inProgressList = [];
+let completedList = [];
+
+window.addEventListener("load", () => {
+  getRecipe(query);
+});
+
+async function getRecipe(query) {
+  const res = await fetch(
+    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${query}&number=20&addRecipeInformation=true`
+  );
+  const data = await res.json();
+  const recipeName = document.querySelector(".recipe-name");
+  if(data.status === "failure") alert("API Daily Limit Exceeded !!!");
+  else {
+    recipeName.innerHTML = `KANBAN DASHBOARD : <i>${data.results[0].title}</i>`;
+    data.results[0].analyzedInstructions[0].steps.forEach((item) => {
+      toDoList.push(item.step);
+    });
+    bindDataToDo(toDoList);
+    setSummary(data.results[0]);
+  }
+  
+}
+
+toDoSteps.addEventListener("change", function (event) {
+  const target = event.target;
+  if (target.classList.contains("to-do-checkbox") && target.checked) {
+    const text = target.nextElementSibling.textContent;
+    const index = toDoList.indexOf(text);
+    if (index !== -1) {
+      toDoList.splice(index, 1);
+      console.log(`Removed : ${text}`);
+      console.log(toDoList);
+      inProgressList.push(text);
+      bindDataToDo(toDoList);
+      bindDataInProgress(inProgressList);
+    }
+  }
+});
+
+inProgressSteps.addEventListener("change", function (event) {
+  const target = event.target;
+  if (target.classList.contains("in-progress-checkbox") && target.checked) {
+    const text = target.nextElementSibling.textContent;
+    const index = inProgressList.indexOf(text);
+    if (index !== -1) {
+      inProgressList.splice(index, 1);
+      console.log(`Removed : ${text}`);
+      console.log(inProgressList);
+      completedList.push(text);
+      bindDataInProgress(inProgressList);
+      bindDataCompleted(completedList);
+    }
+  }
+});
+
+function bindDataToDo(toDoList) {
+  const toDoTemplate = document.getElementById("template-to-do");
+  toDoSteps.innerHTML = "";
+
+  for (let i = 0; i < toDoList.length; i++) {
+    const toDoClone = toDoTemplate.content.cloneNode(true);
+    fillData(toDoClone, toDoList[i]);
+    toDoSteps.appendChild(toDoClone);
+  }
+}
+
+function bindDataInProgress(inProgressList) {
+  const inProgressTemplate = document.getElementById("template-in-progress");
+  inProgressSteps.innerHTML = "";
+
+  for (let i = 0; i < inProgressList.length; i++) {
+    const inProgressClone = inProgressTemplate.content.cloneNode(true);
+    fillData(inProgressClone, inProgressList[i]);
+    inProgressSteps.appendChild(inProgressClone);
+  }
+}
+
+function bindDataCompleted(completedList) {
+  const completedTemplate = document.getElementById("template-completed");
+  completedSteps.innerHTML = "";
+
+  for (let i = 0; i < completedList.length; i++) {
+    const completedClone = completedTemplate.content.cloneNode(true);
+    fillData(completedClone, completedList[i]);
+    completedSteps.appendChild(completedClone);
+  }
+}
+
+function fillData(toDoClone, str) {
+  const itemStep = toDoClone.querySelector(".dynamic-heading");
+  itemStep.innerHTML = str;
+}
+
 // Light & Dark Mode
 
 mode.addEventListener("click", () => {
@@ -111,6 +211,20 @@ summaryClose.addEventListener("click", () => {
   summaryModal.style.scale = 0;
   overlayOff();
 });
+
+function setSummary(data) {
+  document.getElementById("recipe-name").innerHTML = data.title;
+  let recipeType = '<ul style="list-style: none;">';
+  for(let i=0; i < data.dishTypes.length; i++) {
+    recipeType += `<li>${data.dishTypes[i]}</li>`
+  }
+  document.getElementById("recipe-type").innerHTML = recipeType;
+  document.getElementById("recipe-time").innerHTML = `Approx. ${data.readyInMinutes} minutes`;
+  document.getElementById("recipe-serve").innerHTML = data.servings;
+  document.getElementById("recipe-price").innerHTML = `Rs. ${data.pricePerServing}`;
+  document.getElementById("recipe-description").innerHTML = data.summary.trim();
+
+}
 
 // Options - Servings
 
@@ -275,8 +389,8 @@ window.addEventListener("resize", handleResize);
 
 toDoArrow.addEventListener("click", () => {
   if (window.getComputedStyle(toDoSteps).display === "block") {
-    toDoSteps.style.display = "none";
     toDoContainer.style.maxHeight = "11vh";
+    toDoSteps.style.display = "none";
   } else {
     toDoSteps.style.display = "block";
     toDoContainer.style.maxHeight = "84vh";
@@ -303,8 +417,3 @@ completedArrow.addEventListener("click", () => {
   }
 });
 
-allArrow.addEventListener("click", () => {
-  for(let i = 0; i < allArrow.length; i++) {
-    allArrow[i].classList.toggle("rotateArrow");
-  }
-});
